@@ -2,6 +2,7 @@
 #include <ctime>
 #include <cstdlib>
 #include "kazuate.h"
+#define SEE_ANSWER_KAZUATE   //答えを見れるようにするかどうか
 using namespace std;
 
 static enum judge {
@@ -26,28 +27,31 @@ static const char* const HINT[] = {
 
 void Kazuate()
 {
-	srand((unsigned int)time(NULL));
-	cpu = rand() % 10 + 1;
-
 	do {
+		srand((unsigned int)time(NULL));
+		cpu = rand() % 10 + 1;
+
 		system("cls");
 		printf("CPUが選んだ１～１０までの数字を３回以内に当てるゲームです\n\n");
 
 		for(int i = 1; i < 4; ++i){
 			do {
-				cout << i << "回目" << "　＞　" << flush;
+			#ifdef SEE_ANSWER_KAZUATE   //答えを見れるようにするかどうか
+				printf("答えは%dです\n\n", cpu);
+			#endif
+				printf("%d回目　＞　", i);
 				cin >> answer;
 			}while(answer < 1 || 10 < answer);
 			if (Judge(answer, cpu, i) == correctAnswer) {
-				cout << endl << i << RESULT[0] << endl;
+				printf("\n%d%s\n", i, RESULT[0]);
 				break; 
 			}else if(i >= 3){
-				cout << RESULT[1] << cpu << endl << endl;
+				printf("%s%d\n\n", RESULT[1], cpu);
 			}
 		}
 
 		do {
-			cout << "1:ゲームを続ける　2:ゲーム選択へ戻る\n\n　＞　" << flush;
+			printf("1:ゲームを続ける　2:ゲーム選択へ戻る\n\n　＞　");
 			cin >> continu;
 			system("cls");
 		} while (continu < 1 || 2 < continu);
@@ -60,11 +64,11 @@ static judge Judge(int Answer, int CPU, int turn)
 		return correctAnswer;
 	}
 	else if (Answer > CPU) {
-		if(turn < 3) cout << HINT[0] << endl;
+		if (turn < 3) printf("%s\n", HINT[0]);
 		return incorrectAnswer;
 	}
 	else if (Answer < CPU) {
-		if (turn < 3) cout << HINT[1] << endl;
+		if (turn < 3) printf("%s\n", HINT[1]);
 		return incorrectAnswer;
 	}
 }

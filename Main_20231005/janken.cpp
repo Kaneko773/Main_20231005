@@ -2,6 +2,7 @@
 #include <ctime>
 #include <cstdlib>
 #include "janken.h"
+#define SEE_ANSWER_JANKEN   //相手の手を見れるようにするかどうか
 using namespace std;
 
 static enum judge {
@@ -21,26 +22,37 @@ static const char* const RESULT[] = {
 	"\n引き分け\n\n",
 };
 
+#ifdef SEE_ANSWER_JANKEN   //相手の手を見れるようにするかどうか
+static const char* const ANSWER[] = {
+	"CPUの手はグーです\n",
+	"CPUの手はチョキです\n",
+	"CPUの手はパーです\n",
+};
+#endif
+
 void Janken()
 {
 	do {
-		do {
-			system("cls");
-			cout << "1:グー　2:チョキ　3:パー\n\n　＞　" << flush;
-			cin >> input;
-		} while (input < 1 || 3 < input);
-
 		srand((unsigned int)time(NULL));
 		cpu = rand() % 3 + 1;
 
+		do {
+			system("cls");
+			#ifdef SEE_ANSWER_JANKEN   //CPUの手を見れるようにするかどうか
+			printf("%s\n", ANSWER[cpu - 1]);
+			#endif
+			printf("1:グー　2:チョキ　3:パー\n\n　＞　");
+			cin >> input;
+		} while (input < 1 || 3 < input);
+
 		switch (Judge(input, cpu)) {
-		case win: cout << RESULT[0]; break;
-		case lose: cout << RESULT[1]; break;
-		case draw: cout << RESULT[2]; break;
+		case win: printf("%s", RESULT[0]); break;
+		case lose: printf("%s", RESULT[1]); break;
+		case draw: printf("%s", RESULT[2]); break;
 		}
 
 		do {
-			cout << "1:ゲームを続ける　2:ゲーム選択へ戻る\n\n　＞　" << flush;
+			printf("1:ゲームを続ける　2:ゲーム選択へ戻る\n\n　＞　");
 			cin >> continu;
 			system("cls");
 		} while (continu < 1 || 2 < continu);

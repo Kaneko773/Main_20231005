@@ -11,7 +11,7 @@ int main()
     int mode = 0;
 
     do{
-        cout << "1:じゃんけん　2:数当て　3:終了\n\n　＞　" << flush;
+        printf("1:じゃんけん　2:数当て　3:終了\n\n　＞　");
         cin >> mode;
 
         system("cls");
