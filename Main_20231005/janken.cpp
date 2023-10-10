@@ -11,6 +11,12 @@ static enum judge {
 	draw,
 };
 
+static enum hand {
+	pa = 1,
+	choki = 2,
+	gu = 3,
+};
+
 static judge Judge(int Player, int CPU);
 static int input = 0;//答え入力用
 static int cpu = 0;//CPUの手
@@ -63,9 +69,9 @@ static judge Judge(int Player, int CPU) //1:グー　2:チョキ　3:パー
 {
 	if (Player == CPU) {
 		return draw;
-	}else if ((Player == 1 && CPU == 2) || (Player == 2 && CPU == 3) || (Player == 3 && CPU == 1)) {
+	}else if ((Player == gu && CPU == choki) || (Player == choki && CPU == pa) || (Player == pa && CPU == gu)) {
 		return win;
-	}else if ((Player == 1 && CPU == 3) || (Player == 2 && CPU == 1) || (Player == 3 && CPU == 2)) {
+	}else if ((Player == gu && CPU == pa) || (Player == choki && CPU == gu) || (Player == pa && CPU == choki)) {
 		return lose;
 	}
 }

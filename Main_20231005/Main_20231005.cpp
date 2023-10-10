@@ -6,6 +6,12 @@
 #include "kazuate.h"
 using namespace std;
 
+enum MODE {
+    janken = 1,
+    kazuate = 2,
+    End = 3,
+};
+
 int main()
 {
     int mode = 0;
@@ -16,9 +22,9 @@ int main()
 
         system("cls");
         switch (mode) {
-        case 1: Janken(); break;
-        case 2: Kazuate(); break;
-        case 3: cout << "\n終了しました" << endl;
+        case janken: Janken(); break;
+        case kazuate: Kazuate(); break;
+        case End: cout << "\n終了しました" << endl;
         default: break;
         }
     } while (mode != 3);

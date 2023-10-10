@@ -4,4 +4,3 @@
 void Kazuate();
 
 #endif // #ifndef REDEF_20231009_1343
-
